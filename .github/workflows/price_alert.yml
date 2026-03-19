@@ -1,0 +1,44 @@
+name: Flipkart Price Alert
+
+on:
+  schedule:
+    - cron: "0 * 19-20 3 *"   # Every hour on 19th and 20th March 2026 only
+  workflow_dispatch:            # Manual trigger
+
+jobs:
+  check-prices:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright browsers (Chromium only)
+        run: |
+          python -m playwright install chromium
+          python -m playwright install-deps chromium
+
+      - name: Run price alert script
+        env:
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
+          # --- Resend backend (recommended: free, easy signup) ---
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM: ${{ secrets.RESEND_FROM }}
+          # --- SendGrid backend ---
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          SENDGRID_FROM: ${{ secrets.SENDGRID_FROM }}
+          # --- Outlook/Hotmail SMTP (no App Password needed) ---
+          OUTLOOK_USER: ${{ secrets.OUTLOOK_USER }}
+          OUTLOOK_PASS: ${{ secrets.OUTLOOK_PASS }}
+          # --- Gmail SMTP (requires App Password) ---
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+        run: python price_alert.py
