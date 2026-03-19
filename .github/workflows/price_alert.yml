@@ -32,13 +32,4 @@ jobs:
           # --- Resend backend (recommended: free, easy signup) ---
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           RESEND_FROM: ${{ secrets.RESEND_FROM }}
-          # --- SendGrid backend ---
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-          SENDGRID_FROM: ${{ secrets.SENDGRID_FROM }}
-          # --- Outlook/Hotmail SMTP (no App Password needed) ---
-          OUTLOOK_USER: ${{ secrets.OUTLOOK_USER }}
-          OUTLOOK_PASS: ${{ secrets.OUTLOOK_PASS }}
-          # --- Gmail SMTP (requires App Password) ---
-          GMAIL_USER: ${{ secrets.GMAIL_USER }}
-          GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
         run: python price_alert.py
