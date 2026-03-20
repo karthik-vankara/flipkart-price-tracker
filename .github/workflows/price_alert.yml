@@ -2,8 +2,7 @@ name: Flipkart Price Alert
 
 on:
   schedule:
-    - cron: "0 * 19-20 3 *"   # Every hour on 19th and 20th March (IST)
-      timezone: "Asia/Kolkata"
+    - cron: "30 * 19-20 3 *"  # Every hour on Mar 19-20 (UTC; IST = UTC+5:30)
   workflow_dispatch:            # Manual trigger
 
 jobs:
